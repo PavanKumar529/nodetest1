@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/Home.css" />
+  </head>
+  <body>
+    <header>
+      <img class="logo" src="../Assets/PCS4.png" alt="logo" />
+      <nav>
+        <ul class="nav_links">
+          <li><a href="../Home.html">Home</a></li>
+          <li><a href="./About.html">About</a></li>
+          <li><a href="./Contact.html">Contact</a></li>
+          <!-- <li><a href="#">Services</a></li>
+        <li><a href="#">Projects</a></li> -->
+        </ul>
+      </nav>
+      <a href="./Login.html">
+        <button>SignUp</button>
+      </a>
+    </header>
+    <div class="content">
+      <form id="form">
+        <fieldset>
+          <legend>Register Here</legend>
+          <table>
+            <!-- <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" id="name"></td>
+          </tr> -->
+            <tr>
+              <td><label>Email:</label></td>
+              <td><input type="email" id="userName" /></td>
+            </tr>
+            <tr>
+              <td><label>Password:</label></td>
+              <td><input type="password" id="password" /></td>
+            </tr>
+            <tr>
+              <td><button>Login</button></td>
+            </tr>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+    <footer>
+      <h1>Bangalore</h1>
+      <h2>+91 8328533863</h2>
+    </footer>
+
+    <script>
+      let form = document.getElementById("form");
+      let userData = {};
+
+      form.addEventListener("input", (event) => {
+        let value = event.target.value;
+        let id = event.target.id;
+        userData[id] = value;
+        console.log(userData);
+      });
+
+      form.addEventListener("sumbit", (event) => {
+        event.preventDefault();
+        if (userData.userName && userData.password) {
+          fetch("/newuser", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(userData),
+          })
+            .then((data) => data.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.log(error));
+        } else {
+          alert("Fill the all details");
+        }
+      });
+    </script>
+  </body>
+</html>
